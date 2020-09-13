@@ -1,4 +1,6 @@
-class Model extends EventTarget {
+import { Messanger } from './node_modules/js-minievents/Messanger.js'
+
+class Model extends Messanger {
     constructor(data = {}) {
         super()
         for (const key in data) {
@@ -11,8 +13,8 @@ class Model extends EventTarget {
                     this['_' + key] = val
                     const detail = {}
                     detail[key] = val
-                    this.dispatchEvent(new CustomEvent('change', {detail : detail}))
-                    this.dispatchEvent(new CustomEvent('change:' + key, {detail : detail}))
+                    this.post('change', detail)
+                    this.post('change:' + key, detail)
                 }
             })
         }
